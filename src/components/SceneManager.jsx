@@ -1,88 +1,87 @@
-import { useState, useMemo } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Home, Network, User, Rocket } from 'lucide-react';
-import DomeIntro from './DomeIntro';
-import AiRealm from './AiRealm';
-import VisionaryChamber from './VisionaryChamber';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import DomeIntro from './DomeIntro.jsx';
+import AiRealm from './AiRealm.jsx';
+import VisionaryChamber from './VisionaryChamber.jsx';
 
-const scenes = [
-  { id: 'genesis', label: 'Genesis Dome', icon: Home },
-  { id: 'ai', label: 'AI Realm', icon: Network },
-  { id: 'vision', label: 'Visionary Chamber', icon: User },
-  { id: 'future', label: 'Future Vision', icon: Rocket },
+const tabs = [
+  { key: 'dome', label: 'Dome Intro' },
+  { key: 'ai', label: 'AI Realm' },
+  { key: 'vision', label: 'Visionary Chamber' },
 ];
 
 export default function SceneManager() {
-  const [active, setActive] = useState('genesis');
-
-  const SceneComponent = useMemo(() => {
-    switch (active) {
-      case 'ai':
-        return AiRealm;
-      case 'vision':
-        return VisionaryChamber;
-      case 'future':
-        return () => (
-          <div className="relative h-[88vh] min-h-[560px] flex items-center justify-center bg-gradient-to-br from-[#000814] via-[#0a0030] to-[#180036]">
-            <div className="absolute inset-0 pointer-events-none opacity-40" style={{
-              backgroundImage:
-                'radial-gradient(circle at 20% 30%, rgba(127,0,255,0.4), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0,255,255,0.35), transparent 45%)',
-            }} />
-            <div className="relative max-w-3xl mx-auto text-center px-6">
-              <p className="text-xs tracking-[0.35em] uppercase text-cyan-300">Beyond Earth</p>
-              <h2 className="mt-3 text-3xl sm:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-white to-purple-400 text-transparent bg-clip-text">
-                Terraforming Tomorrow
-              </h2>
-              <p className="mt-4 text-sm sm:text-base text-[#f5f5f5]/80">
-                NovaEra Hub aims to extend life and sustainability beyond Earth — from intelligent nanobots to interplanetary ecosystems.
-              </p>
-            </div>
-          </div>
-        );
-      case 'genesis':
-      default:
-        return DomeIntro;
-    }
-  }, [active]);
+  const [active, setActive] = useState('dome');
 
   return (
-    <div className="relative">
-      {/* Top navigation */}
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-        <nav className="flex items-center gap-2 rounded-2xl border border-white/10 bg-[#000814]/70 backdrop-blur px-2 py-2 shadow-lg shadow-black/40">
-          {scenes.map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              onClick={() => setActive(id)}
-              className={`flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium transition-colors ${
-                active === id
-                  ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-white'
-                  : 'text-white/70 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              <span className="hidden sm:inline">{label}</span>
-            </button>
-          ))}
-        </nav>
+    <section id="scenes" className="relative w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-gray-900">Realms</h2>
+          <div className="flex rounded-xl border border-gray-200 bg-white/70 p-1 shadow-sm backdrop-blur">
+            {tabs.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => setActive(t.key)}
+                className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                  active === t.key ? 'text-gray-900' : 'text-gray-500 hover:text-gray-800'
+                }`}
+              >
+                {t.label}
+                {active === t.key && (
+                  <motion.span
+                    layoutId="pill"
+                    className="absolute inset-0 -z-0 rounded-lg bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10"> </span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Scene container with cinematic 3D-like transition */}
-      <div style={{ perspective: '1200px' }}>
+      <div className="relative h-[80vh] w-full overflow-hidden">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, scale: 0.985, filter: 'blur(8px)', rotateX: -2 }}
-            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', rotateX: 0 }}
-            exit={{ opacity: 0, scale: 0.992, filter: 'blur(6px)', rotateX: 1 }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            className="min-h-[88vh] will-change-transform"
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            <SceneComponent />
-          </motion.div>
+          {active === 'dome' && (
+            <motion.div
+              key="dome"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              className="absolute inset-0"
+            >
+              <DomeIntro />
+            </motion.div>
+          )}
+          {active === 'ai' && (
+            <motion.div
+              key="ai"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              className="absolute inset-0"
+            >
+              <AiRealm />
+            </motion.div>
+          )}
+          {active === 'vision' && (
+            <motion.div
+              key="vision"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              className="absolute inset-0"
+            >
+              <VisionaryChamber />
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 }

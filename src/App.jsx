@@ -1,13 +1,14 @@
-import Navbar from './components/Navbar';
-import SceneManager from './components/SceneManager';
-import ProjectsGrid from './components/ProjectsGrid';
-import ContactSection from './components/ContactSection';
+import React from 'react';
+import Navbar from './components/Navbar.jsx';
+import SceneManager from './components/SceneManager.jsx';
+import ProjectsGrid from './components/ProjectsGrid.jsx';
+import ContactSection from './components/ContactSection.jsx';
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-800">
       <Navbar />
-      <main>
+      <main className="pt-16">
         <SceneManager />
         <ProjectsGrid />
         <ContactSection />
@@ -15,5 +16,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
