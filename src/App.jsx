@@ -1,20 +1,17 @@
-import SceneManager from './components/SceneManager';
-import DomeIntro from './components/DomeIntro';
-import AiRealm from './components/AiRealm';
-import VisionaryChamber from './components/VisionaryChamber';
+import Navbar from './components/Navbar';
+import Hero3D from './components/Hero3D';
+import ProjectsGrid from './components/ProjectsGrid';
+import ContactSection from './components/ContactSection';
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#000814] text-white">
-      {/* SceneManager handles navigation and smooth transitions between scenes */}
-      <SceneManager />
-
-      {/* Preload key scenes (not rendered) by importing them here */}
-      <div className="hidden">
-        <DomeIntro />
-        <AiRealm />
-        <VisionaryChamber />
-      </div>
+    <div className="min-h-screen bg-white text-gray-900">
+      <Navbar />
+      <main>
+        <Hero3D />
+        <ProjectsGrid />
+        <ContactSection />
+      </main>
     </div>
   );
 }
