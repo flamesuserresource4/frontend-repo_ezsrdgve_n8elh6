@@ -11,7 +11,8 @@ const tabs = [
 ];
 
 export default function SceneManager() {
-  const [active, setActive] = useState('dome');
+  // Open with the metallic cube grid scene as requested
+  const [active, setActive] = useState('ai');
 
   return (
     <section id="scenes" className="relative w-full">
@@ -27,15 +28,14 @@ export default function SceneManager() {
                   active === t.key ? 'text-gray-900' : 'text-gray-500 hover:text-gray-800'
                 }`}
               >
-                {t.label}
+                <span className="relative z-10">{t.label}</span>
                 {active === t.key && (
                   <motion.span
                     layoutId="pill"
-                    className="absolute inset-0 -z-0 rounded-lg bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100"
+                    className="absolute inset-0 z-0 rounded-lg bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100"
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
-                <span className="relative z-10"> </span>
               </button>
             ))}
           </div>
