@@ -67,19 +67,22 @@ export default function SceneManager() {
         </nav>
       </div>
 
-      {/* Scene container with smooth transitions */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="min-h-[88vh]"
-        >
-          <SceneComponent />
-        </motion.div>
-      </AnimatePresence>
+      {/* Scene container with cinematic 3D-like transition */}
+      <div style={{ perspective: '1200px' }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, scale: 0.985, filter: 'blur(8px)', rotateX: -2 }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', rotateX: 0 }}
+            exit={{ opacity: 0, scale: 0.992, filter: 'blur(6px)', rotateX: 1 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="min-h-[88vh] will-change-transform"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <SceneComponent />
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
