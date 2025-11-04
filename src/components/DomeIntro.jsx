@@ -7,7 +7,7 @@ export default function DomeIntro() {
       {/* 3D animation scene */}
       <div className="absolute inset-0">
         <Spline
-          scene="https://prod.spline.design/UngO8SNLfLcyPG7O/scene.splinecode"
+          scene="https://prod.spline.design/Gt5HUob8aGDxOUep/scene.splinecode"
           style={{ width: '100%', height: '100%' }}
         />
       </div>
